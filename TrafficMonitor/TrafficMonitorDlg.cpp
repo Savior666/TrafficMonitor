@@ -74,6 +74,7 @@ BEGIN_MESSAGE_MAP(CTrafficMonitorDlg, CDialogEx)
 	ON_UPDATE_COMMAND_UI(ID_SHOW_TASK_BAR_WND, &CTrafficMonitorDlg::OnUpdateShowTaskBarWnd)
 	ON_COMMAND(ID_APP_ABOUT, &CTrafficMonitorDlg::OnAppAbout)
 	ON_COMMAND(ID_SHOW_CPU_MEMORY2, &CTrafficMonitorDlg::OnShowCpuMemory2)
+	ON_COMMAND(ID_SHOW_UP_DOWN, &CTrafficMonitorDlg::OnShowUpDown)
 	//ON_COMMAND(ID_AUTO_RUN_WHEN_START, &CTrafficMonitorDlg::OnAutoRunWhenStart)
 	ON_COMMAND(ID_SHOW_MAIN_WND, &CTrafficMonitorDlg::OnShowMainWnd)
 	ON_UPDATE_COMMAND_UI(ID_SHOW_MAIN_WND, &CTrafficMonitorDlg::OnUpdateShowMainWnd)
@@ -1742,6 +1743,16 @@ void CTrafficMonitorDlg::OnShowCpuMemory2()
 	}
 }
 
+//任务栏窗口切换显示网络使用情况的处理
+VOID CTrafficMonitorDlg::OnShowUpDown()
+{
+	if (m_tBarDlg != nullptr)
+	{
+		theApp.m_cfg_data.m_tbar_show_up_down = !theApp.m_cfg_data.m_tbar_show_up_down;;
+		CloseTaskBarWnd();
+		OpenTaskBarWnd();
+	}
+}
 
 void CTrafficMonitorDlg::OnUpdateShowCpuMemory(CCmdUI *pCmdUI)
 {

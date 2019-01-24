@@ -170,6 +170,7 @@ public:
 	afx_msg void OnUpdateShowTaskBarWnd(CCmdUI *pCmdUI);
 	afx_msg void OnAppAbout();
 	afx_msg void OnShowCpuMemory2();
+	afx_msg void OnShowUpDown();
 //	afx_msg void OnAutoRunWhenStart();
 	afx_msg void OnShowMainWnd();
 	afx_msg void OnUpdateShowMainWnd(CCmdUI *pCmdUI);

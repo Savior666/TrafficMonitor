@@ -125,6 +125,7 @@ struct MainConfigData
 	bool m_hide_main_window;			//隐藏主窗口
 	bool m_show_notify_icon{ true };	//显示通知区域图标
 	bool m_tbar_show_cpu_memory;		//任务栏窗口显示CPU和内存利用率
+	bool m_tbar_show_up_down;			//任务栏窗口显示网络使用情况
 
 	int m_position_x;	//窗口位置的x坐标
 	int m_position_y;	//窗口位置的y坐标

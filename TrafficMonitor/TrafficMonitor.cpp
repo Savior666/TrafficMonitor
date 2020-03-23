@@ -116,7 +116,6 @@ void CTrafficMonitorApp::LoadConfig()
 	ini.GetIntArray(_T("task_bar"), _T("task_bar_text_color"), (int*)m_taskbar_data.text_colors, TASKBAR_COLOR_NUM, m_taskbar_data.dft_text_colors);
 	m_taskbar_data.specify_each_item_color = ini.GetBool(L"task_bar", L"specify_each_item_color", false);
 	m_cfg_data.m_tbar_show_cpu_memory = ini.GetBool(_T("task_bar"), _T("task_bar_show_cpu_memory"), false);
-	m_cfg_data.m_tbar_show_up_down = ini.GetBool(_T("task_bar"), _T("task_bar_show_up_down"), false);
 	m_taskbar_data.swap_up_down = ini.GetBool(_T("task_bar"), _T("task_bar_swap_up_down"), false);
 
 	//m_taskbar_data.font.name = ini.GetString(_T("task_bar"), _T("tack_bar_font_name"), CCommon::LoadText(IDS_MICROSOFT_YAHEI)).c_str();
@@ -224,7 +223,6 @@ void CTrafficMonitorApp::SaveConfig()
 	ini.WriteIntArray(L"task_bar", L"task_bar_text_color", (int*)m_taskbar_data.text_colors, TASKBAR_COLOR_NUM);
 	ini.WriteBool(L"task_bar", L"specify_each_item_color", m_taskbar_data.specify_each_item_color);
 	ini.WriteBool(L"task_bar", L"task_bar_show_cpu_memory", m_cfg_data.m_tbar_show_cpu_memory);
-	ini.WriteBool(L"task_bar", L"task_bar_show_up_down", m_cfg_data.m_tbar_show_up_down);
 	ini.SaveFontData(L"task_bar", m_taskbar_data.font);
 	ini.WriteBool(L"task_bar", L"task_bar_swap_up_down", m_taskbar_data.swap_up_down);
 

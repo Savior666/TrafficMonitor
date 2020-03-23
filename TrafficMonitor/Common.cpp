@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Common.h"
+#include "TrafficMonitor.h"
 
 
 CCommon::CCommon()
@@ -165,17 +166,17 @@ CString CCommon::DataSizeToString(unsigned int size, const PublicSettingData& cf
 	return str;
 }
 
-CString CCommon::DataSizeToString(unsigned int size)
+CString CCommon::DataSizeToString(unsigned long long size)
 {
 	CString str;
 	if (size < 1024 * 10)					//10KB以下以KB为单位，保留2位小数
-		str.Format(_T("%.2f KB"), size / 1024.0f);
+		str.Format(_T("%.2f KB"), size / 1024.0);
 	else if (size < 1024 * 1024)			//1MB以下以KB为单位，保留1位小数
-		str.Format(_T("%.1f KB"), size / 1024.0f);
+		str.Format(_T("%.1f KB"), size / 1024.0);
 	else if (size < 1024 * 1024 * 1024)		//1GB以下以MB为单位，保留2位小数
-		str.Format(_T("%.2f MB"), size / 1024.0f / 1024.0f);
+		str.Format(_T("%.2f MB"), size / 1024.0 / 1024.0);
 	else
-		str.Format(_T("%.2f GB"), size / 1024.0f / 1024.0f / 1024.0f);
+		str.Format(_T("%.2f GB"), size / 1024.0 / 1024.0 / 1024.0);
 	return str;
 }
 
@@ -520,12 +521,13 @@ bool CCommon::CopyStringToClipboard(const wstring & str)
 
 bool CCommon::GetURL(const wstring & url, wstring & result, bool utf8)
 {
-	bool sucessed{ false };
-	CInternetSession session{};
-	CHttpFile* pfile{};
+	bool succeed{ false };
+    CInternetSession* pSession{};
+    CHttpFile* pfile{};
 	try
 	{
-		pfile = (CHttpFile *)session.OpenURL(url.c_str());
+        pSession = new CInternetSession();
+		pfile = (CHttpFile *)pSession->OpenURL(url.c_str());
 		DWORD dwStatusCode;
 		pfile->QueryInfoStatusCode(dwStatusCode);
 		if (dwStatusCode == HTTP_STATUS_OK)
@@ -537,11 +539,11 @@ bool CCommon::GetURL(const wstring & url, wstring & result, bool utf8)
 				content += data;
 			}
 			result = StrToUnicode((const char*)content.GetString(), utf8);
-			sucessed = true;
+			succeed = true;
 		}
 		pfile->Close();
 		delete pfile;
-		session.Close();
+        pSession->Close();
 	}
 	catch (CInternetException* e)
 	{
@@ -550,11 +552,14 @@ bool CCommon::GetURL(const wstring & url, wstring & result, bool utf8)
 			pfile->Close();
 			delete pfile;
 		}
-		session.Close();
-		sucessed = false;
+        if (pSession != nullptr)
+            pSession->Close();
+		succeed = false;
 		e->Delete();		//没有这句会造成内存泄露
+        SAFE_DELETE(pSession);
 	}
-	return sucessed;
+    SAFE_DELETE(pSession);
+    return succeed;
 }
 
 void CCommon::GetInternetIp(wstring& ip_address, wstring& ip_location, bool global)
@@ -628,6 +633,29 @@ CString CCommon::LoadText(LPCTSTR front_str, UINT id, LPCTSTR back_str)
 	if (front_str != nullptr)
 		str = front_str + str;
 	return str;
+}
+
+CString CCommon::StringFormat(LPCTSTR format_str, const std::initializer_list<CVariant>& paras)
+{
+	CString str_rtn = format_str;
+	int index = 1;
+	for (const auto& para : paras)
+	{
+		CString para_str = para.ToString();
+		CString format_para;
+		format_para.Format(_T("<%%%d%%>"), index);
+		str_rtn.Replace(format_para, para_str);
+
+		index++;
+	}
+	return str_rtn;
+}
+
+CString CCommon::LoadTextFormat(UINT id, const std::initializer_list<CVariant>& paras)
+{
+	CString str;
+	str.LoadString(id);
+	return StringFormat(str.GetString(), paras);
 }
 
 CString CCommon::IntToString(int n, bool thousand_separation, bool is_unsigned)
@@ -760,6 +788,29 @@ void CCommon::SetThreadLanguage(Language language)
 	case Language::SIMPLIFIED_CHINESE: SetThreadUILanguage(MAKELANGID(LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED)); break;
 	case Language::TRADITIONAL_CHINESE: SetThreadUILanguage(MAKELANGID(LANG_CHINESE, SUBLANG_CHINESE_TRADITIONAL)); break;
 	default: break;
+	}
+}
+
+void CCommon::SetColorMode(ColorMode mode)
+{
+	switch (mode)
+	{
+	case ColorMode::Default:
+		CTrafficMonitorApp::self->m_taskbar_data.dft_back_color = 0;
+		CTrafficMonitorApp::self->m_taskbar_data.dft_transparent_color = 0;
+		CTrafficMonitorApp::self->m_taskbar_data.dft_status_bar_color = 0x005A5A5A;
+		CTrafficMonitorApp::self->m_taskbar_data.dft_text_colors = 0x00ffffffU;
+		CTrafficMonitorApp::self->m_cfg_data.m_dft_notify_icon = 0;
+		break;
+	case ColorMode::Light:
+		CTrafficMonitorApp::self->m_taskbar_data.dft_back_color = 0x00D2D2D2;
+		CTrafficMonitorApp::self->m_taskbar_data.dft_transparent_color = 0x00D2D2D2;
+		CTrafficMonitorApp::self->m_taskbar_data.dft_status_bar_color = 0x00A5A5A5;
+		CTrafficMonitorApp::self->m_taskbar_data.dft_text_colors = 0x00000000U;
+		CTrafficMonitorApp::self->m_cfg_data.m_dft_notify_icon = 4;
+		break;
+	default:
+		break;
 	}
 }
 

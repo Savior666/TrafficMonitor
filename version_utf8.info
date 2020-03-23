@@ -1,7 +1,8 @@
-﻿<version>1.76</version>
-<link>https://github.com/zhongyang219/TrafficMonitor/releases/download/V1.76/TrafficMonitor_V1.76.7z</link>
+﻿<version>1.78</version>
+<link>https://github.com/zhongyang219/TrafficMonitor/releases/download/V1.78/TrafficMonitor_V1.78_x86.7z</link>
+<link_x64>https://github.com/zhongyang219/TrafficMonitor/releases/download/V1.78/TrafficMonitor_V1.78_x64.7z</link_x64>
 <update_contents>
-	<contents_zh_cn>修正了分辨率更改可能会导致程序崩溃的问题；\n新增配置文件保存位置的选项；\n修正了当分辨率变化时任务栏窗口的垂直位置不正确的问题；\n新增今日上传和下载流量的显示，历史流量统计中增加上传和下载流量的统计；\n其他细节方面的改进。</contents_zh_cn>
-	<contents_en>Fix the problem that the resolution changes may cause the program crash.\nAdd the options for the saving location of the configuration files.\nFix the problem that the vertical position of the taskbar window was incorrect when the resolution changed.\nAdd the display of today’s upload and download traffic. Add the upload and download traffic statics in the history traffic static dialog.\nImprovements in other details.</contents_en>
-	<contents_zh_tw>修正了解析度更改可能會導致程式崩潰的問題；\n新增設定檔儲存位置的選項；\n修正了當解析度更改時工作列視窗的垂直位置不正確的問題；\n新增今日上傳和下載流量的顯示，歷史流量統計中增加上傳和下載流量的統計；\n其他細節方面的改進。</contents_zh_tw>
+	<contents_zh_cn>新增双击主窗口或任务栏窗口打开指定应用程序的功能\n新增任务栏窗口中显示CPU和内存利用率状态条的功能\n修正Windows10中CPU利用率和任务管理器不一致的问题\n新增是否显示鼠标提示的选项\n新增程序首次启启动时根据Windows10浅色模式设置任务栏颜色的功能\n任务栏设置中增加预设方案的功能\n其他细节方面的改进</contents_zh_cn>
+	<contents_en>Add the function to open the specified application by double-clicking the main window or taskbar window.\nAdd the function to display the CPU and memory utilization status bar in the taskbar window.\nFix the inconsistence of CPU usage with the task manager in Windows 10.\nAdded option to show mouse tool tips.\nAdded the function to set the taskbar color according to Windows 10 light mode when the program is first started.\nAdded the function of preset schemes in the taskbar settings.\nImprovements in other details.</contents_en>
+	<contents_zh_tw>新增按兩下主視窗或工作列視窗開啟指定應用程式的功能\n新增工作列視窗中顯示CPU和RAM可用狀態條的功能\n修正 Windows 10 中 CPU 使用量和工作管理員不一致的問題\n新增是否顯示游標提示的選項\n新增程式首次啟動時根據 Windows 10 淺色模式設定工作列顏色的功能\n工作列設定中增加預設方案的功能\n其他細節方面的改進</contents_zh_tw>
 </update_contents>
